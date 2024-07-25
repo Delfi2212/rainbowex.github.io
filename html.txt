@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainbow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            color: black;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+            width: 200px;
+        }
+        .result-container {
+            margin-top: 20px;
+            background-color: white;
+            color: black;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .result-container div {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rainbow</h1>
+    <div class="container">
+        <input type="number" id="amount" placeholder="Monto actual">
+        <input type="number" id="days" placeholder="Días de operación">
+        <button onclick="calculate()">Calcular</button>
+    </div>
+
+    <div id="result" class="result-container">
+        <div id="total"></div>
+        <div id="minus5"></div>
+        <div id="final"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const amount = document.getElementById('amount').value;
+            const days = document.getElementById('days').value;
+            const dailyRate = 1.6 / 100; // 1.6% diario
+
+            if (amount && days && !isNaN(amount) && !isNaN(days)) {
+                const total = amount * Math.pow((1 + dailyRate), days);
+                const minus5 = total * 0.95; // Restar 5%
+                document.getElementById('total').textContent = `Monto después de ${days} días: ${total.toFixed(2)}`;
+               
+                document.getElementById('final').textContent = `Si retiras ese día, recibirás en tu cuenta 5% menos que es la comision de rainbow: ${minus5.toFixed(2)}`;
+            } else {
+                document.getElementById('total').textContent = 'Por favor, ingrese valores válidos.';
+                document.getElementById('minus5').textContent = '';
+                document.getElementById('final').textContent = '';
+            }
+        }
+    </script>
+</body>
+</html>
